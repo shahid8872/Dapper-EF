@@ -130,3 +130,4 @@ D:\DapperApp\DapperApp\DapperApp\obj\Debug\net6.0\DapperApp.dll
 D:\DapperApp\DapperApp\DapperApp\obj\Debug\net6.0\ref\DapperApp.dll
 D:\DapperApp\DapperApp\DapperApp\obj\Debug\net6.0\DapperApp.pdb
 D:\DapperApp\DapperApp\DapperApp\obj\Debug\net6.0\DapperApp.genruntimeconfig.cache
+D:\DapperApp\DapperApp\DapperApp\bin\Debug\net6.0\Dapper.Contrib.dll

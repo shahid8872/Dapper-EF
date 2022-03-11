@@ -1,8 +1,10 @@
-﻿using DapperApp.Contracts;
+﻿using Dapper.Contrib.Extensions;
+using DapperApp.Contracts;
 using DapperApp.Data;
 using DapperApp.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 
 namespace DapperApp.Controllers
 {
@@ -18,20 +20,8 @@ namespace DapperApp.Controllers
             _dbContext = applicationDbContext;
 
         }
-     
-        [HttpGet]
 
-        public IEnumerable<Employee> GetAll()
-        {
-            try
-            {
-                return _dbContext.Employees.ToList();
-            }
-            catch (Exception ee)
-            {
-                throw;
-            }
-        }
+        
 
     }
 }
