@@ -6,28 +6,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DapperApp.Controllers
 {
-    [Route("api/EmployeeEF")]
+    [Route("api/emp")]
     [ApiController]
-    public class EmployeeEFController : ControllerBase
+    public class EmpController : ControllerBase
     {
         private readonly IEmployeeRepository _employeeRepo;
         ApplicationDbContext _dbContext;
-        public EmployeeEFController(IEmployeeRepository employeeRep, ApplicationDbContext applicationDbContext)
+        public EmpController(IEmployeeRepository employeeRep, ApplicationDbContext applicationDbContext)
         {
             _employeeRepo = employeeRep;
             _dbContext = applicationDbContext;
 
         }
-        public IEnumerable<Employee> GetEmployees()
+     
+        [HttpGet]
+
+        public IEnumerable<Employee> GetAll()
         {
             try
             {
                 return _dbContext.Employees.ToList();
             }
-            catch (Exception ex)
+            catch (Exception ee)
             {
-                throw ex;
+                throw;
             }
         }
+
     }
 }
