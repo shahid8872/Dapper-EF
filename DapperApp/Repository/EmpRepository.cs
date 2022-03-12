@@ -3,6 +3,7 @@ using DapperApp.Context;
 using DapperApp.Contracts;
 using DapperApp.Dto;
 using DapperApp.Entities;
+using Microsoft.Data.SqlClient;
 using System.Data;
 
 namespace DapperApp.Repository
@@ -150,8 +151,7 @@ namespace DapperApp.Repository
                 }
             }
         }
-
-        public  string CreateEmployeeList(List<Employee> employee)
+        public string CreateEmployeeList1(List<Employee> employee)
         {
             using (var connection = _context.CreateConnection())
             {
@@ -163,6 +163,7 @@ namespace DapperApp.Repository
                     {
                         try
                         {
+                            var message = "";
                             foreach (var item in employee)
                             {
                                 var parameters = new DynamicParameters();
@@ -173,10 +174,12 @@ namespace DapperApp.Repository
                                 parameters.Add("Position", item.Position, DbType.String);
                                 parameters.Add("CompanyId", item.CompanyId, DbType.Int32);
                                 connection.Execute("usp_AddEmployee", parameters, commandType: CommandType.StoredProcedure, transaction: tran);
+                                message = parameters.Get<string>("message");
                             }
                             tran.Commit();
-                            return  "";
-                            
+
+                            return message;
+
                         }
                         catch (Exception ex)
                         {
@@ -192,6 +195,36 @@ namespace DapperApp.Repository
             }
         }
 
+        public string CreateEmployeeList(List<Employee> employee)
+        {
+            using (var connection = _context.CreateConnection())
+            {
+                try
+                {
+                    if (connection.State == ConnectionState.Closed)
+                        connection.Open();
+                    using (var tran = connection.BeginTransaction())
+                    {
+                        try
+                        {
+                            string processQuery = "INSERT INTO Employees(Name,Age,Position,CompanyId)VALUES(@Name,@Age,@Position,@CompanyId)";
+                            connection.Execute(processQuery, employee,transaction:tran);
+                            tran.Commit();
+                            return "";
+                        }
+                        catch (Exception ex)
+                        {
+                            tran.Rollback();
+                            throw ex;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
         public Employee Find(int id)
         {
             using (var connection = _context.CreateConnection())

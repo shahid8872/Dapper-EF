@@ -15,23 +15,6 @@ namespace DapperApp.Controllers
             _employeeRepo = employeeRep;
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> CreateCompany(Employee employee)
-        //{
-           
-        //    try
-        //    {
-        //        var createdEmployee = await _employeeRepo.CreateEmployee(employee);
-        //        return CreatedAtRoute("EmployeeId", new { id = employee.Id }, createdEmployee);
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        //log error
-        //        return StatusCode(500, ex.Message);
-        //    }
-
-        //}
-
         [HttpPost]
         public  string CreateCompanyList(List<Employee> employee)
         {
